@@ -1,0 +1,18 @@
+Spark SQL supports three kinds of window functions: ranking functions, analytic functions, 
+and aggregate functions. The available ranking functions and analytic functions are summarized in the table below.
+For aggregate functions, users can use any existing aggregate function as a window function.
+
+	SQL	-------------------------------------- DataFrame API
+Ranking functions	
+rank	                                        rank
+dense_rank	                                  denseRank
+percent_rank	                                percentRank
+ntile	                                        ntile
+row_number	                                  rowNumber
+Analytic functions	
+cume_dist                                   	cumeDist
+first_value	                                  firstValue
+last_value	                                  lastValue
+lag	                                          lag
+lead	                                        lead
+
