@@ -52,7 +52,7 @@ object TopNProductsByCategory {
 
     val sc = new SparkContext(conf)
 
-    val products = sc.textFile("c:/users/viswa_000/Research/data/retail_db/products")
+    val products = sc.textFile("d:/data/retail_db/products")
     val productsFiltered = products.
       filter(rec => rec.split(",")(0).toInt != 685)
     val productsMap = productsFiltered.map(rec => (rec.split(",")(1).toInt, rec))
@@ -65,7 +65,7 @@ object TopNProductsByCategory {
 
 //    productsGBK.
 //      flatMap(rec => getTopNPricedProducts(rec, topN)).
-//      saveAsTextFile("c:/users/viswa_000/Research/data/topNPricedProducts")
+//      saveAsTextFile("give path to file")
 
   }
 
