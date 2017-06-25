@@ -1,0 +1,72 @@
+
+(I have just practiced as part of the training ---- the original source is "http://discuss.itversity.com/t/exercise-06-get-top-n-traded-stocks-by-volume-each-month-from-nyse-data-with-in-a-given-year/2676")
+Description
+
+write a program to compute dense ranking
+Use NYSE end of day stock data
+This is example for groupByKey as well as functional programming using scala
+Problem Statement
+
+Use sbt with Eclipse or intellij to develop this
+Get top N stocks by volume for each day or month
+Use the scala interpreter and preview the data after each step using Spark APIs
+Develop the program using sbt and eclipse or intellij
+Develop topNStocks function - function should take 2 parameters
+First Parameter - Tuple of date or month and then list of stocks for that date or month
+Second Parameter - topN
+Function should sort data in descending order and return top N stocks
+If there are more than N stocks in topN print all stocks (dense rank)
+Compile the jar, ship it and run it on the lab
+Output format - Date or month, Stock Name, Volume (all 3 fields should be delimited by \t)
+Determine number of executors used to run
+Determine number of executor tasks used to run
+Understand DAG for each stage
+Similar program for reference
+
+import org.apache.spark.SparkContext
+import org.apache.spark.SparkConf
+
+object TopNProductsByCategory {
+
+  def getTopNPricedProducts(rec: (Int, Iterable[String]), topN: Int): Iterable[String] = {
+    //Exract all the prices into a collection
+    val productsList = rec._2.toList
+    val topNPrices = productsList.
+      map(x => x.split(",")(4).toFloat).
+      sortBy(x => -x).
+      distinct.
+      slice(0, topN)
+
+    val topNPricedProducts = productsList.
+      sortBy(x => -x.split(",")(4).toFloat).
+      filter(x => topNPrices.contains(x.split(",")(4).toFloat))
+
+    topNPricedProducts
+  }
+
+  def main(args: Array[String]) {
+    val topN = args(0).toInt
+    val conf = new SparkConf().
+      setAppName("Top " + topN + " priced products in category - simulating dense rank").
+      setMaster("local")
+
+    val sc = new SparkContext(conf)
+
+    val products = sc.textFile("c:/users/viswa_000/Research/data/retail_db/products")
+    val productsFiltered = products.
+      filter(rec => rec.split(",")(0).toInt != 685)
+    val productsMap = productsFiltered.map(rec => (rec.split(",")(1).toInt, rec))
+    val productsGBK = productsMap.groupByKey()
+
+    productsGBK.
+      flatMap(rec => getTopNPricedProducts(rec, topN)).
+      collect().
+      foreach(println)
+
+//    productsGBK.
+//      flatMap(rec => getTopNPricedProducts(rec, topN)).
+//      saveAsTextFile("c:/users/viswa_000/Research/data/topNPricedProducts")
+
+  }
+
+}
