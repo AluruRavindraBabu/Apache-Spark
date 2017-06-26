@@ -1,1 +1,52 @@
 
+case class Department(
+                       departmentId: Int,
+                       departmentName: String
+                     )
+
+case class Category(
+                     categoryId: Int,
+                     categoryDepartmentId: Int,
+                     categoryName: String
+                   )
+
+
+case class Product(
+                    productId: Int,
+                    productCategoryId: Int,
+                    productName: String,
+                    productDescription: String,
+                    productPrice: Float,
+                    productImage: String
+                  )
+
+case class Customer(
+                     customerId: Int,
+                     customerFname: String,
+                     customerLname: String,
+                     customerEmail: String,
+                     customerPassword: String,
+                     customerStreet: String,
+                     customerCity: String,
+                     customerState: String,
+                     customerZipcode: String
+                   )
+
+case class Order(
+                  orderId: Int,
+                  orderDate: String,
+                  orderCustomerId: Int,
+                  orderStatus: String
+                )
+
+case class OrderItem(
+                      orderItemId: Int,
+                      orderItemOrderId: Int,
+                      orderItemProductId: Int,
+                      orderItemQuantity: Int,
+                      orderItemSubtotal: Float,
+                      orderItemProductPrice: Float
+                    ) {
+  require(
+    orderItemSubtotal == orderItemQuantity * orderItemProductPrice, "Invalid orderItemSubtotal " + orderItemSubtotal
+  )
