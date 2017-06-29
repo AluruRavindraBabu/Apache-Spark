@@ -1,20 +1,18 @@
 (Please note,.... This documen I have developed only for my reference and learning purpose.... 
 most of the content is not my own  and I have refered itversity.com, coursera.org, edx.org, simplilearn.com and many other youtube videos)
 
-# Apache-Spark
+# Apache-Spark 2.0
 1. About Spark:
+
+Spark is a distributed programming model where the user specifies transformations, which build up a directed-acyclic-graph of instructions, and actions, which begin the process of executing that graph of instructions, as a single job, by breaking it down into stages and tasks to execute across the cluster. 
+The way we store data on which to perform transformations and actions are DataFrames and Datasets
+
+
 2. Environment Setup
     Intellij Environment Setup
     Eclipse Environemnt Setup
 3. SparkContext and SparkConf
 4. Programming
-
-
-
-
-
-
-
 
 
 
